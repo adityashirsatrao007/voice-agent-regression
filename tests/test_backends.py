@@ -1,4 +1,5 @@
 import os
+import sys
 import unittest
 from unittest import mock
 
@@ -8,7 +9,7 @@ from vareg.backends.llm import LLMBackend, _api_message, _load_dotenv
 from vareg.backends.mock import MockBackend
 from vareg.cost import PRICES, cost_usd, price_for
 from vareg.prompts import load_spec
-from vareg.registry import DEFAULT_REGISTRY
+from vareg.registry import DEFAULT_REGISTRY, ToolContext
 from vareg.report import usage_block
 
 CLEAN_ENV = {"LLM_API_KEY": "", "SARVAM_API_KEY": "", "LLM_MODEL": "", "LLM_BASE_URL": ""}
@@ -51,6 +52,18 @@ class GuardTests(unittest.TestCase):
         backend = LLMBackend(load_spec(), DEFAULT_REGISTRY)
         self.assertEqual(backend.name, "llm")
         self.assertEqual(backend.usage, {"input_tokens": 0, "output_tokens": 0})
+
+    @mock.patch.dict(os.environ, {**CLEAN_ENV, "LLM_API_KEY": "test-key", "LLM_MODEL": "m"})
+    @mock.patch("vareg.backends.llm._load_dotenv")
+    def test_missing_requests_fails_at_call_time_not_build_time(self, _loader) -> None:
+        """Regression from CI (a runner without `requests`): the spec guards
+        must be checkable without the optional dependency, and the package
+        error must fire only when an HTTP call is actually attempted."""
+        with mock.patch.dict(sys.modules, {"requests": None}):
+            backend = LLMBackend(load_spec(), DEFAULT_REGISTRY)
+            self.assertIsNone(backend._http)
+            with self.assertRaisesRegex(BackendError, "pip install requests"):
+                backend.decide([], [], ToolContext())
 
     def test_langgraph_backend_without_the_package_is_actionable(self) -> None:
         if langgraph_available():

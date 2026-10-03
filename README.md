@@ -313,7 +313,7 @@ $ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 ```text
 ----------------------------------------------------------------------
-Ran 211 tests in 0.237s
+Ran 212 tests in 0.142s
 
 OK (skipped=15)
 ```
@@ -328,7 +328,7 @@ $ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v
 
 ```text
 ----------------------------------------------------------------------
-Ran 211 tests in 1.105s
+Ran 212 tests in 1.094s
 
 OK (skipped=1)
 ```
@@ -386,7 +386,7 @@ voice-agent-regression/
 │   ├── registry.py            # tools, validation, scripted handlers
 │   ├── report.py              # run assembly + rendering
 │   └── scenarios.py           # schema loader with authoring errors
-└── tests/                     # 211 tests
+└── tests/                     # 212 tests
 ```
 
 ## Limits

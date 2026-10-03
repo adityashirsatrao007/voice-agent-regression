@@ -88,21 +88,33 @@ class LLMBackend(Backend):
                 "LLM_API_KEY (or SARVAM_API_KEY) is not set. Copy .env.example to .env "
                 "and fill it in, or run --backend mock for an offline run."
             )
-        try:
-            import requests  # optional dependency: only this backend needs it
-        except ImportError as exc:  # pragma: no cover - environment dependent
-            raise BackendError(
-                "the 'requests' package is required for --backend llm: pip install requests"
-            ) from exc
-        self._http = requests
+        # Validate the spec before touching the optional dependency: a
+        # misconfigured backend must fail with the same message on every
+        # machine, whether or not `requests` is installed. GitHub CI caught
+        # this - on a requests-less runner the package error fired first and
+        # the guard naming LLM_MODEL never ran.
         self.base_url = (base_url or os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
         self.model = (model or os.environ.get("LLM_MODEL") or "").strip()
         if not self.model:
             raise BackendError("LLM_MODEL is not set. Copy .env.example to .env and set it.")
         self.timeout = timeout
         self.usage = {"input_tokens": 0, "output_tokens": 0}
+        self._http = None  # imported on first use; only this backend needs it
+
+    def _library(self):
+        """Import ``requests`` lazily so *building* a backend never requires it."""
+        if self._http is None:
+            try:
+                import requests  # optional dependency: only this backend needs it
+            except ImportError as exc:
+                raise BackendError(
+                    "the 'requests' package is required for --backend llm: pip install requests"
+                ) from exc
+            self._http = requests
+        return self._http
 
     def decide(self, messages: list[dict[str, Any]], tools: Sequence[Tool], ctx: ToolContext) -> Decision:
+        http = self._library()
         payload = {
             "model": self.model,
             "messages": [_api_message(m) for m in messages],
@@ -110,13 +122,13 @@ class LLMBackend(Backend):
             "tool_choice": "auto",
         }
         try:
-            response = self._http.post(
+            response = http.post(
                 f"{self.base_url}/chat/completions",
                 json=payload,
                 headers={"Authorization": f"Bearer {self.api_key}"},
                 timeout=self.timeout,
             )
-        except self._http.RequestException as exc:  # pragma: no cover - network
+        except http.RequestException as exc:  # pragma: no cover - network
             raise BackendError(f"chat.completions request failed: {exc}") from exc
         if response.status_code != 200:
             raise BackendError(
