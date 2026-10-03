@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Unit tests (stdlib only; langgraph tests skip)
+        run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+
+      - name: CLI smoke (mock backend, offline)
+        run: PYTHONPATH=src python3 -m vareg run --out results --quiet
+
+      - name: Regression gate against the committed baseline
+        run: PYTHONPATH=src python3 -m vareg regress
+
+  langgraph:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install langgraph
+        run: python3 -m pip install langgraph
+
+      - name: Unit tests including the LangGraph integration
+        run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+
+      - name: CLI smoke through the graph backend
+        run: PYTHONPATH=src python3 -m vareg run --backend langgraph --out results/langgraph --quiet
+
+      - name: Regression gate through the graph backend
+        run: PYTHONPATH=src python3 -m vareg regress --backend langgraph

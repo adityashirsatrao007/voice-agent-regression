@@ -1,0 +1,15 @@
+{
+  "default": "v2",
+  "versions": [
+    {
+      "version": "v1",
+      "date": "2026-10-03",
+      "change": "first prompt: booking, account lookup, escalation; no cancel tool (cancellations escalated); missing slots guessed rather than asked for"
+    },
+    {
+      "version": "v2",
+      "date": "2026-10-03",
+      "change": "exposed cancel_booking so cancellations stop escalating, and switched clarify_on_missing_slots to true so a missing slot produces a question instead of a guess"
+    }
+  ]
+}

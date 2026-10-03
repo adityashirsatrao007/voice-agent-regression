@@ -1,0 +1,7 @@
+# Core: none. The default (mock) backend, the CLI and the whole test suite run
+# on the Python 3.10+ stdlib — no install needed.
+#
+# Optional backends — install only what you use:
+# requests>=2.31     # --backend llm (OpenAI-compatible chat.completions)
+# langgraph>=1.0     # --backend langgraph (system pip is PEP-668 locked:
+#                    #   python3 -m venv .venv && .venv/bin/pip install langgraph)

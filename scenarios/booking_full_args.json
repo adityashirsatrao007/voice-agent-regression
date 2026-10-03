@@ -1,0 +1,25 @@
+{
+  "id": "booking_full_args",
+  "title": "Booking with every slot supplied by the caller",
+  "tags": ["booking", "tool-call"],
+  "max_steps": 4,
+  "turns": [
+    {
+      "user": "Book a consultation on 12 October at 19:00 for 2 people, phone 9876543210.",
+      "expect": {
+        "tools": ["book_appointment"],
+        "args": {
+          "book_appointment": {
+            "service": "consultation",
+            "date": "2026-10-12",
+            "time": "19:00",
+            "party_size": 2,
+            "phone": "9876543210"
+          }
+        },
+        "keywords": ["booked", "BK-100001"],
+        "gold_answer": "Booked consultation on 2026-10-12 at 19:00 for 2 people. Confirmation BK-100001."
+      }
+    }
+  ]
+}

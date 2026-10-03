@@ -1,0 +1,16 @@
+{
+  "id": "booking_missing_slot",
+  "title": "Missing slot (time) turns into a clarifying question, not a guess",
+  "tags": ["booking", "clarification", "prompt-sensitive"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "Book a consultation on 12 October.",
+      "expect": {
+        "tools": [],
+        "forbid": ["book_appointment"],
+        "clarify": ["time"]
+      }
+    }
+  ]
+}

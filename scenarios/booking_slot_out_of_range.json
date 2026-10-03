@@ -1,0 +1,17 @@
+{
+  "id": "booking_slot_out_of_range",
+  "title": "Party size outside the bookable range must be challenged, not sent",
+  "tags": ["booking", "validation", "clarification"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "Book a consultation on 12 October at 19:00 for 40 people, phone 9876543210.",
+      "expect": {
+        "tools": [],
+        "forbid": ["book_appointment"],
+        "clarify": ["party size"],
+        "forbid_args": {"book_appointment": ["party_size"]}
+      }
+    }
+  ]
+}

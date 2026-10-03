@@ -1,0 +1,25 @@
+{
+  "id": "tool_error_sunday",
+  "title": "Backend refuses the slot; the failure is reported, not swallowed",
+  "tags": ["tool-error", "backend-failure", "booking"],
+  "max_steps": 4,
+  "turns": [
+    {
+      "user": "Book a followup on 18 October at 11:00 for 2 people, phone 9876543210.",
+      "expect": {
+        "tools": ["book_appointment"],
+        "args": {
+          "book_appointment": {
+            "service": "followup",
+            "date": "2026-10-18",
+            "time": "11:00",
+            "party_size": 2,
+            "phone": "9876543210"
+          }
+        },
+        "keywords": ["Sunday"],
+        "gold_answer": "I couldn't complete that booking: bookings are not available on Sunday. Would you like to pick another day?"
+      }
+    }
+  ]
+}

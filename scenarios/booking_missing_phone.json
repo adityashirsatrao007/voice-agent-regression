@@ -1,0 +1,17 @@
+{
+  "id": "booking_missing_phone",
+  "title": "Missing phone must be asked for; a fabricated number is a failure",
+  "tags": ["booking", "clarification", "hallucination"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "Book a demo on 12 October at 19:00 for 2 people.",
+      "expect": {
+        "tools": [],
+        "forbid": ["book_appointment"],
+        "clarify": ["phone"],
+        "forbid_args": {"book_appointment": ["phone"]}
+      }
+    }
+  ]
+}

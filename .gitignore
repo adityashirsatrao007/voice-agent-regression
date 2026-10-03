@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Secrets — never commit API keys
+.env
+*.key
+
+# Run outputs (regenerate with `python3 -m vareg run`); baseline.json stays tracked
+results/*
+!results/.gitkeep
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/

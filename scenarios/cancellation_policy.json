@@ -1,0 +1,22 @@
+{
+  "id": "cancellation_policy",
+  "title": "Cancellation uses the cancel tool when the prompt licenses it",
+  "tags": ["booking", "cancel", "prompt-sensitive"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "Cancel my booking BK-123456, I can't make it to the appointment.",
+      "expect": {
+        "tools": ["cancel_booking"],
+        "args": {
+          "cancel_booking": {
+            "booking_id": "BK-123456",
+            "reason": "schedule_conflict"
+          }
+        },
+        "keywords": ["cancelled"],
+        "gold_answer": "Cancelled booking BK-123456. A confirmation will be sent to your registered number."
+      }
+    }
+  ]
+}

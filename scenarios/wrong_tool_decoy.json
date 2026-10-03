@@ -1,0 +1,16 @@
+{
+  "id": "wrong_tool_decoy",
+  "title": "Reschedule has no tool; the nearest tool (book) must not be reached for",
+  "tags": ["wrong-tool", "clarification"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "Reschedule my dentist appointment to 12 October at 19:00 for 2 people, phone 9876543210.",
+      "expect": {
+        "tools": [],
+        "forbid": ["book_appointment"],
+        "clarify": ["booking reference"]
+      }
+    }
+  ]
+}

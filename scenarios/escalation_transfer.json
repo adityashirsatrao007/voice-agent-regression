@@ -1,0 +1,17 @@
+{
+  "id": "escalation_transfer",
+  "title": "Repeated failure escalates to a human with a reason",
+  "tags": ["escalation", "tool-call"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "This is the third time I'm calling and nothing is fixed. Transfer me to a human right now.",
+      "expect": {
+        "tools": ["transfer_to_human"],
+        "args": {"transfer_to_human": {"reason": "complaint"}},
+        "keywords": ["human support"],
+        "gold_answer": "I've moved you to the human support queue - someone will pick this up shortly."
+      }
+    }
+  ]
+}

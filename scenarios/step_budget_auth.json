@@ -1,0 +1,19 @@
+{
+  "id": "step_budget_auth",
+  "title": "Verify-then-read needs three decisions; the budget is exactly three",
+  "tags": ["budget", "auth", "latency"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "What's the balance in ACC-5678? My number is 9876543210.",
+      "expect": {
+        "tools": ["verify_identity", "get_balance"],
+        "args": {
+          "verify_identity": {"phone": "9876543210"},
+          "get_balance": {"account_id": "ACC-5678"}
+        },
+        "gold_answer": "The balance in ACC-5678 is Rs. 210,197."
+      }
+    }
+  ]
+}

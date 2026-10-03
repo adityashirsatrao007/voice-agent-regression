@@ -1,0 +1,16 @@
+{
+  "id": "direct_answer_hours",
+  "title": "Question answered from the prompt alone - no tool is licensed for it",
+  "tags": ["no-tool", "knowledge"],
+  "max_steps": 2,
+  "turns": [
+    {
+      "user": "What are your working hours?",
+      "expect": {
+        "tools": [],
+        "keywords": ["10:00", "18:00"],
+        "gold_answer": "Our working hours are 10:00 to 18:00, Monday to Saturday."
+      }
+    }
+  ]
+}

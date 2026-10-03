@@ -1,0 +1,17 @@
+{
+  "id": "escalation_billing_reason",
+  "title": "Escalation reason is derived from the complaint, not defaulted",
+  "tags": ["escalation", "tool-call", "argument"],
+  "max_steps": 3,
+  "turns": [
+    {
+      "user": "You have debited the payment twice and I need this fixed by a person.",
+      "expect": {
+        "tools": ["transfer_to_human"],
+        "args": {"transfer_to_human": {"reason": "billing"}},
+        "keywords": ["human support"],
+        "gold_answer": "I've moved you to the human support queue - someone will pick this up shortly."
+      }
+    }
+  ]
+}

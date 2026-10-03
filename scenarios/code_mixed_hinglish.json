@@ -1,0 +1,25 @@
+{
+  "id": "code_mixed_hinglish",
+  "title": "Hinglish request with English slots resolves to the same booking call",
+  "tags": ["code-mixed", "booking"],
+  "max_steps": 4,
+  "turns": [
+    {
+      "user": "Bhai ek consultation book karna hai 12 October ko 19:00 baje, 2 log, mera number 9876543210.",
+      "expect": {
+        "tools": ["book_appointment"],
+        "args": {
+          "book_appointment": {
+            "service": "consultation",
+            "date": "2026-10-12",
+            "time": "19:00",
+            "party_size": 2,
+            "phone": "9876543210"
+          }
+        },
+        "keywords": ["booked"],
+        "gold_answer": "Booked consultation on 2026-10-12 at 19:00 for 2 people. Confirmation BK-100001."
+      }
+    }
+  ]
+}

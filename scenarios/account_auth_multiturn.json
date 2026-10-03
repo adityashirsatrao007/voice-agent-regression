@@ -1,0 +1,35 @@
+{
+  "id": "account_auth_multiturn",
+  "title": "Account balance behind an auth guard, resolved across three turns",
+  "tags": ["auth", "multi-turn", "account"],
+  "max_steps": 4,
+  "turns": [
+    {
+      "user": "What's the balance in ACC-1234?",
+      "expect": {
+        "tools": [],
+        "forbid": ["get_balance", "lookup_account"],
+        "clarify": ["number"]
+      }
+    },
+    {
+      "user": "My number is 9876543210.",
+      "expect": {
+        "tools": ["verify_identity", "get_balance"],
+        "args": {
+          "verify_identity": {"phone": "9876543210"},
+          "get_balance": {"account_id": "ACC-1234"}
+        },
+        "gold_answer": "The balance in ACC-1234 is Rs. 45,769."
+      }
+    },
+    {
+      "user": "And what name is the account registered under?",
+      "expect": {
+        "tools": ["lookup_account"],
+        "args": {"lookup_account": {"account_id": "ACC-1234"}},
+        "gold_answer": "ACC-1234 is registered to A. Sharma."
+      }
+    }
+  ]
+}
