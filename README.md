@@ -71,6 +71,8 @@ is enforced (a tool outside it returns `not_licensed`), and
 `clarify_on_missing_slots` is read by the policy. Under v1 exactly three
 scenarios fail — captured below.
 
+![Gate matrix for 16 scenarios: prompt v1 fails booking missing phone, booking missing slot and cancellation policy, prompt v2 passes all 16](figures/scenario-gate.png)
+
 ## Reproduce from a clean checkout
 
 ```bash
