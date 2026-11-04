@@ -6,6 +6,11 @@ backends) and a regression gate that fails CI when a candidate run scores below
 the committed baseline. Everything on the default path is Python stdlib: no
 install, no network, no API key.
 
+## Part of a set
+
+Four small Indian-language AI evaluation harnesses, each reproducible with no API key:
+[ASR benchmark](https://github.com/adityashirsatrao007/sarvam-asr-benchmark) · [document extraction](https://github.com/adityashirsatrao007/sarvam-vision-doc-extract) · [Indic RAG evals](https://github.com/adityashirsatrao007/indic-rag-evals).
+
 ## The gate contract
 
 | command | exit 0 | exit 1 | exit 2 |
